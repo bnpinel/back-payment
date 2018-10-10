@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+
 import com.cl.packapp.backpayment.dao.PaymentRepository;
 import com.cl.packapp.backpayment.model.Payment;
 
@@ -25,36 +26,27 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentRepository repository;
+		
 	
-	
-	@RequestMapping(value="/payment/{card_id}", method=RequestMethod.GET)
-	public Optional<Payment> viewPaymentByCardId(@PathVariable("card_id") String card_id) {
-		return repository.findByCardId(card_id);
+	@RequestMapping(value="/payment/{id}", method=RequestMethod.GET)
+	public Optional<Payment> viewPaymentByCardId(@PathVariable("id") String id) {
+		return repository.findById(id);
 	}
 	
 	
 	
-	@RequestMapping(value="/payment/{card_id}", method=RequestMethod.POST)
-	public ResponseEntity<?> editCard(@RequestBody Card card, UriComponentsBuilder ucBuilder) {
+
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<?> createPayment(@RequestBody Payment payment, UriComponentsBuilder ucBuilder) {
 		
-		card = repository.save(card);
+		payment = repository.save(payment);
 		
-		System.out.println("---- Card " + card.getId() + " added");
+		System.out.println("---- Paymt " + payment.getId() + " added");
 		
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/card{id}").buildAndExpand(card.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/payment{id}").buildAndExpand(payment.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 	
-	
-	@RequestMapping(value="/card/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<?> editCard(@PathVariable("id") String id, @RequestBody Card card, UriComponentsBuilder ucBuilder) {
-		
-		card = repository.save(card);
-		
-		System.out.println("---- Card " + card.getId() + " edited");
-		
-        return new ResponseEntity<Card>(card, HttpStatus.OK);
-	}
-
 }

@@ -8,14 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Payment {
 	@Id
     private String id;
-	private String card_id;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate date;
+	private String date;
 	private String description;
 
-	 public Payment(String id, String card_id, LocalDate date, String description) {
+	 public Payment(String id, String date, String description) {
 	    	this.id = id;
-	    	this.card_id = card_id;
 	    	this.date = date;
 	    	this.description = description;
 	    }
@@ -28,16 +25,10 @@ public class Payment {
 	public void setId(String Id) {
 		this.id = id;
 	}
-	public String getCard_id() {
-		return card_id;
-	}
-	public void setCard_id(String card_id) {
-		this.card_id = card_id;
-	}
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(LocalDate date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getDescription() {
