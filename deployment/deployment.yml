@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-payment-deployment
+  namespace: packapp04
+spec:
+  selector:
+    matchLabels:
+      app: back-payment
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: back-payment
+    spec:
+      containers:
+      - name: back-payment
+        image: registry.hackathon-container.com/packapp04/back-payment:2.1
+        ports:
+        - containerPort: 9092
+      imagePullSecrets:
+      - name: registry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-payment-svc
+  namespace: packapp04
+spec:
+  type: ClusterIP
+  selector:
+    app: back-payment
+  ports:
+  - name: back-payment-ports 
+    port: 9092
+    targetPort: 9092
+    protocol: TCP
