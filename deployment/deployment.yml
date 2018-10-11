@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: back-payment
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: back-payment
-        image: registry.hackathon-container.com/packapp04/back-payment:2.1
+        image: registry.hackathon-container.com/packapp04/back-payment:2.3
         ports:
         - containerPort: 9092
       imagePullSecrets:
